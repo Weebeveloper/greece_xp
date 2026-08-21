@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { createAngularFetchBridge } from './common/HttpCache.service';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../environments/environment.prod';
 
 const supabaseURL = environment.SUPABASE_URL;
 const supabaseKey = environment.SUPABASE_KEY;
