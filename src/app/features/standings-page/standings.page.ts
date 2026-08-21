@@ -1,7 +1,15 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  resource,
+  signal,
+} from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
-import { IPointParticle } from './particle.interface';
+import { IPointParticle } from './interfaces/particle.interface';
+import { StandingsApiService } from './api.service';
 
 @Component({
   selector: 'app-standings-overview',
@@ -12,50 +20,72 @@ import { IPointParticle } from './particle.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StandingsOverview {
+  private readonly _api = inject(StandingsApiService);
+
   protected readonly particles = signal<IPointParticle[]>([]);
-  protected readonly canShowResults = signal<boolean>(false);
+  protected readonly canShowResults = signal<boolean>(this._shouldShowResults());
 
-  chartOption: EChartsOption = {
-    tooltip: {
-      trigger: 'item',
-    },
-    series: [
-      {
-        name: 'Access From',
-        type: 'pie',
-        radius: ['30%', '50%'],
-        avoidLabelOverlap: false,
-        padAngle: 5,
+  readonly chartResource = resource({
+    loader: () => this._api.getAllUsersScore(),
+  });
 
-        itemStyle: {
-          borderRadius: 10,
-        },
+  readonly chartOptions = computed<EChartsOption>(() => {
+    const scores = this.chartResource.value() ?? [];
 
-        label: {
-          fontSize: '1rem',
-        },
-
-        emphasis: {
-          label: {
-            show: true,
-            fontWeight: 'bold',
-          },
-        },
-
-        data: [
-          { value: 1048, name: 'סהר' },
-          { value: 735, name: 'עוכאנה' },
-          { value: 580, name: 'אריאל' },
-        ],
+    return {
+      tooltip: {
+        trigger: 'item',
       },
-    ],
-  };
+      series: [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: ['30%', '50%'],
+          avoidLabelOverlap: false,
+          padAngle: 5,
+          itemStyle: {
+            borderRadius: 10,
+          },
+          label: {
+            fontSize: '1rem',
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontWeight: 'bold',
+            },
+          },
+
+          data: scores.map((score) => ({
+            name: score.name,
+            value: score.score,
+          })),
+        },
+      ],
+    };
+  });
 
   constructor() {
-    this.generateParticles();
+    this._generateParticles();
   }
 
-  private generateParticles() {
+  private _shouldShowResults() {
+    const now = new Date();
+
+    // Enforces Greece time zone formatting
+    const greeceTimeString = now.toLocaleString('en-US', {
+      timeZone: 'Europe/Athens',
+      hour: '2-digit',
+      hour12: false,
+    });
+
+    // returns a number between 1 - 24
+    const currentHour = parseInt(greeceTimeString, 10) + 1;
+
+    return currentHour >= 19 && currentHour < 24;
+  }
+
+  private _generateParticles() {
     const pointValues = ['+1', '-1', '+5', '-5', '+10', '-10'];
     const totalParticles = 10;
     const generated: IPointParticle[] = [];

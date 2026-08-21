@@ -6,7 +6,7 @@
 
 @if (canShowResults()) {
   <main>
-    <div echarts [options]="chartOption" class="chart"></div>
+    <div echarts [options]="chartOptions()" class="chart"></div>
     <div id="points-background-container">
       @for (particle of particles(); track $index) {
         <div
