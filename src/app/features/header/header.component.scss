@@ -1,0 +1,37 @@
+:host {
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--border-color);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  width: 100%;
+}
+
+.trip-details {
+  width: 30%;
+  text-align: center;
+
+  .title {
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    white-space: nowrap;
+  }
+
+  .user {
+    font-weight: bold;
+    white-space: nowrap;
+    font-size: 0.9rem;
+  }
+}
+
+.logout-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 30%;
+}

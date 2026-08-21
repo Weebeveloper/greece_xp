@@ -1,0 +1,24 @@
+<section class="trip-details">
+  <div class="title">משימות יוון</div>
+  @switch (appService.selectedUser()) {
+    @case (Users.SAHAR) {
+      <div class="user">{{ destination() }}, סהר</div>
+    }
+
+    @case (Users.Ilay) {
+      <div class="user">{{ destination() }}, עוכאנה</div>
+    }
+
+    @case (Users.Ariel) {
+      <div class="user">{{ destination() }}, אריאל</div>
+    }
+
+    @default {
+      <div class="user">{{ destination() }}</div>
+    }
+  }
+</section>
+
+<section class="logout-button">
+  <button matIconButton><mat-icon>logout</mat-icon></button>
+</section>
