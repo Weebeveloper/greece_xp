@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "greece-xp": {
+    "greece_xp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/greece-xp",
+            "outputPath": "dist/greece_xp",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
@@ -55,10 +55,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "greece-xp:build:production"
+              "buildTarget": "greece_xp:build:production"
             },
             "development": {
-              "buildTarget": "greece-xp:build:development"
+              "buildTarget": "greece_xp:build:development"
             }
           },
           "defaultConfiguration": "development"
