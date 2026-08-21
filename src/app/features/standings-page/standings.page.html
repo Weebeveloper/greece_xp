@@ -1,0 +1,32 @@
+<header>
+  <div class="pm-title">התוצאות של 7 בערב</div>
+  <div class="scoreboard-title">Offical scoreboard</div>
+  <div class="subtitle">מצב הנקודות עבור כל משתתף יוצגו ב7 בערב</div>
+</header>
+
+@if (canShowResults()) {
+  <main>
+    <div echarts [options]="chartOption" class="chart"></div>
+    <div id="points-background-container">
+      @for (particle of particles(); track $index) {
+        <div
+          class="floating-point"
+          [class.plus]="particle.isPositive"
+          [class.minus]="!particle.isPositive"
+          [style.left]="particle.left"
+          [style.top]="particle.top"
+          [style.animation-delay]="particle.animationDelay"
+        >
+          {{ particle.value }}
+        </div>
+      }
+    </div>
+  </main>
+} @else {
+  <main>
+    <section class="coming-soon">
+      <img src="img/coming-soon.png" alt="Coming soon image" />
+      <span>תחזור בירידת השמש</span>
+    </section>
+  </main>
+}

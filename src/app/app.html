@@ -1,0 +1,11 @@
+<main>
+  @if (appService.showControlPanels()) {
+    <app-header></app-header>
+  }
+
+  <router-outlet></router-outlet>
+
+  @if (appService.showControlPanels()) {
+    <app-navbar></app-navbar>
+  }
+</main>

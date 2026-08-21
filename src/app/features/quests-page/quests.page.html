@@ -1,0 +1,20 @@
+@let wa_quest = quest();
+@if (wa_quest) {
+  <div class="quest-container">
+    <section class="quest-panel">
+      <span class="number top-left">{{ wa_quest.points }}</span>
+
+      <div class="quest-name">{{ wa_quest.name }}</div>
+
+      <div class="quest-difficulty">רמת קושי: {{ wa_quest.difficulty }}</div>
+
+      <div class="quest-description">{{ wa_quest.description }}</div>
+
+      <span class="number bottom-right">{{ wa_quest.points }}</span>
+    </section>
+
+    <button class="submit-button" mat-flat-button (click)="onFinishQuest()">סיום משימה</button>
+  </div>
+} @else {
+  <div class="quest-button" matRipple (click)="onQuestButton()">קבל משימה</div>
+}
