@@ -2,11 +2,18 @@ export interface IQuest {
   name: string;
   description: string;
   points: number;
-  difficulty: QuestDifficulty;
+  difficulty: number;
 }
 
 export enum QuestDifficulty {
   EASY = 'מיכאל השמיני',
   MEDIUM = 'אריסטוטלוס',
-  HARD = 'קונסטנטין',
+  HARD = 'אלקנסדר',
+}
+
+export type QuestStatus = 'active' | 'completed_today' | 'available';
+
+export interface IQuestState {
+  status: QuestStatus;
+  quest: IQuest | null;
 }

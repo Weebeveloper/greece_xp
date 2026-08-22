@@ -16,11 +16,18 @@ export class HttpCacheService {
 }
 
 export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
+  const cache = inject(HttpCacheService);
+
   if (req.method !== 'GET') {
-    return next(req);
+    return next(req).pipe(
+      tap((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          cache.store.clear();
+        }
+      }),
+    );
   }
 
-  const cache = inject(HttpCacheService);
   const cacheKey = req.urlWithParams;
   const cachedResponse = cache.store.get(cacheKey);
 

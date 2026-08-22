@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, resource, signal } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
-import { IQuest } from './quest.interface';
+import { IQuest, QuestDifficulty } from './quest.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { QuestsApiService } from './api.service';
@@ -16,14 +16,16 @@ import { QuestsApiService } from './api.service';
 export class QuestsOverview {
   private readonly _api = inject(QuestsApiService);
 
+  protected readonly QuestDifficulty = QuestDifficulty;
+
   protected readonly quest = resource({
     // TODO PLAYERID
-    loader: () => this._api.getCurrentQuest(1)
+    loader: () => this._api.getCurrentQuest(1),
   });
 
   async onQuestButton() {
     // TODO PLAYERID
-    await this._api.requestQuest(1)
+    await this._api.requestQuest(1);
     this.quest.reload();
 
     if (this.isVibartionSupported()) {
@@ -31,9 +33,10 @@ export class QuestsOverview {
     }
   }
 
-  onFinishQuest() {
+  async onFinishQuest() {
     // TODO PLAYERID
-    this._api.completeQuest(1);
+    await this._api.completeQuest(1);
+    this.quest.reload();
   }
 
   private isVibartionSupported(): boolean {

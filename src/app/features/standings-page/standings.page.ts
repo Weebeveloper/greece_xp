@@ -51,11 +51,9 @@ export class StandingsOverview {
           },
           emphasis: {
             label: {
-              show: true,
               fontWeight: 'bold',
             },
           },
-
           data: scores.map((score) => ({
             name: score.name,
             value: score.score,
@@ -79,8 +77,8 @@ export class StandingsOverview {
       hour12: false,
     });
 
-    // returns a number between 1 - 24
-    const currentHour = parseInt(greeceTimeString, 10) + 1;
+    // returns a number between 0 - 23
+    const currentHour = parseInt(greeceTimeString, 10);
 
     return currentHour >= 19 && currentHour < 24;
   }
