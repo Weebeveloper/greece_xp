@@ -29,5 +29,10 @@ body {
 * {
   user-select: none;
   -webkit-user-drag: none;
+
   direction: rtl;
+}
+
+.mat-mdc-progress-spinner * {
+  direction: ltr;
 }
