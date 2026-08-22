@@ -8,7 +8,7 @@ export class StandingsApiService {
   private readonly _api: SupabaseClient = inject(SUPABASE_API);
 
   async getAllUsersScore(): Promise<IUserScore[]> {
-    const results = await this._api.from('Scoreboard').select('*').order('player_score');
+    const results = await this._api.from('scoreboard').select('*').order('player_score');
 
     const mappedResults = results.data?.map(
       (value) =>
